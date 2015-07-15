@@ -15,8 +15,9 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
 
         # User notices the page title and header mention to-do lists
-        assert 'To-Do' in self.browser.title, \
-            'Browser title was "%s"' % self.browser.title
+        self.assertIn('To-Do', self.browser.title)
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('To-Do', header_text)
 
         # User is invited to enter a to-do litem straight away
 
