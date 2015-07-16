@@ -1,6 +1,7 @@
 import unittest
+import time
 from selenium import webdriver
-
+from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(unittest.TestCase):
     def setUp(self):
@@ -20,14 +21,23 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('To-Do', header_text)
 
         # User is invited to enter a to-do litem straight away
-
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertEqual(inputbox.get_attribute('placeholder'),
+                         'Enter a to-do item')
         # User types "Buy peacock feathers" into a textbox
+        inputbox.send_keys('Buy peacock feathers')
 
         # When hitting enter, the page updates, now the page lists:
         # "1. Buy peacock feathers" as an item in a to-do list
+        inputbox.send_keys(Keys.ENTER)
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
 
         # There is still a textbox inviting the usert to add another item.
         # enters "Use peacock feathers to make a fly"
+        self.fail('Finish the test!')
+        input.send_keys('Use peacock feathers to make a fly')
 
         # The page updates again, and now shows both items on the list
 
