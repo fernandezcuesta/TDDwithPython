@@ -11,6 +11,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         # User goes and cheks its homepage
         self.browser.get('http://localhost:8000')
@@ -30,20 +35,22 @@ class NewVisitorTest(unittest.TestCase):
         # When hitting enter, the page updates, now the page lists:
         # "1. Buy peacock feathers" as an item in a to-do list
         inputbox.send_keys(Keys.ENTER)
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        self.check_for_row_in_list_table('1. Buy peacock feathers')
 
         # There is still a textbox inviting the usert to add another item.
         # enters "Use peacock feathers to make a fly"
-        self.fail('Finish the test!')
-        input.send_keys('Use peacock feathers to make a fly')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items on the list
+        self.check_for_row_in_list_table('1. Buy peacock feathers')
+        self.check_for_row_in_list_table('2. Use peacock feathers to make a fly')
 
         # User wonders wheter the site will remember the list. Then he sees
         # that the site has generated a unique URL -- there is some
         # explanatory text
+        self.fail('Finish the tests!')
 
         # User visits the URL, the to-do list still there
 
@@ -51,4 +58,3 @@ class NewVisitorTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
-
