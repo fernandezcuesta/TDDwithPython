@@ -2,6 +2,7 @@ import unittest
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from .models import Item
 
 class NewVisitorTest(unittest.TestCase):
     def setUp(self):
