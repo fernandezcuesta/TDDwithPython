@@ -7,7 +7,7 @@ from .models import Item
 def home_page(request):
     if request.method == 'POST':  # else take its default value: ''
         Item.objects.create(text=request.POST['item_text'])
-        return redirect('/')
+        return redirect('/lists/_test_list/')
     # else:
     #     new_item_text = ''
 
