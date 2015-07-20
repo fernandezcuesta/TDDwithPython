@@ -8,9 +8,11 @@ def home_page(request):
     if request.method == 'POST':  # else take its default value: ''
         Item.objects.create(text=request.POST['item_text'])
         return redirect('/lists/_test_list/')
-    # else:
-    #     new_item_text = ''
+    else:
+        return render(request,'home.html')
 
+
+def view_list(request):
     return render(request,
-                  'home.html',
+                  'list.html',
                   {'items': Item.objects.all()})

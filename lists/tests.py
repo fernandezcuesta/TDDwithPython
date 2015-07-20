@@ -48,6 +48,11 @@ class HomePageTest(TestCase):
         self.assertEqual(Item.objects.count(), 1)
         self.assertEqual(Item.objects.first().text, 'A new list item')
 
+    def test_homepage_only_saves_item_when_necessary(self):
+        request = HttpRequest()
+        home_page(request)
+        self.assertEqual(Item.objects.count(), 0)
+
     def test_homepage_does_redirect_after_POST_request(self):
         request = HttpRequest()
         request.method = 'POST'
@@ -60,6 +65,11 @@ class HomePageTest(TestCase):
 
 
 class ListViewTest(TestCase):
+
+    def test_uses_list_template(self):
+        response = self.client.get('/lists/_test_list/')
+        self.assertTemplateUsed(response, 'list.html')
+
     def test_displays_all_items(self):
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')

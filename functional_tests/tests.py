@@ -53,7 +53,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Now a second user (user02) enters the homepage.
         self.browser.quit()  # to ensure a new session is opened
-        self.browser - webdriver.Firefox()
+        self.browser = webdriver.Firefox()
 
         # user02 visits the homepage and there's no sign of the original user
         self.browser.get(self.live_server_url)
