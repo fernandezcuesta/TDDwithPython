@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 # from django.http import HttpResponse
 
-from .models import Item
+from .models import Item, List
 
 
 def home_page(request):
@@ -12,12 +12,15 @@ def home_page(request):
         return render(request,'home.html')
 
 
-def view_list(request):
+def view_list(request, id):
+    list_ = List.objects.get(id=id)
     return render(request,
                   'list.html',
-                  {'items': Item.objects.all()})
+                  {'items': Item.objects.filter(list=list_),
+                   'id': list_.id})
 
 
 def new_list(request):
-    Item.objects.create(text=request.POST['item_text'])
-    return redirect('/lists/_test_list/')
+    list_ = List.objects.create()
+    Item.objects.create(text=request.POST['item_text'], list=list_)
+    return redirect('/lists/%d/' % list_.id)
