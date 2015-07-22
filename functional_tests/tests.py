@@ -2,10 +2,10 @@ import unittest
 # import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -73,5 +73,15 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Satisfied, goes to sleep
 
-# if __name__ == '__main__':
-#     unittest.main(warnings='ignore')
+    def test_layout_and_styling(self):
+        # User logs in the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # Check if inputbox is moderately centered in the screen
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
