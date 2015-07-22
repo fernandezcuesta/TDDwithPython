@@ -71,16 +71,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertRegex(user02_url, 'lists/.+')
         self.assertNotEqual(user02_url, user01_url)
 
-        # User wonders whether the site will remember the list. Then he sees
-        # that the site has generated a unique URL -- there is some
-        # explanatory text
-
-
-        self.fail('Finish the tests!')
-
-        # User visits the URL, the to-do list still there
-
-        # Satisfied, quits the browser session
+        # Satisfied, goes to sleep
 
 # if __name__ == '__main__':
 #     unittest.main(warnings='ignore')
