@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import render, redirect
 # from django.http import HttpResponse
 
@@ -16,7 +17,7 @@ def view_list(request, id):
     list_ = List.objects.get(id=id)
     return render(request,
                   'list.html',
-                  {'list': list_})
+                  {'list': list_, 'date': date.today()})
 
 
 def new_list(request):

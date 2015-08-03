@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block header_text %}Your To-Do list{% if list.id %} (id: {{ list.id }}){% endif %}{% endblock %}
 
@@ -7,7 +7,13 @@
 {% block table %}
     <table id="id_list_table" class="table table-striped">
 {%    for item in list.item_set.all %}
-        <tr><td>{{ item.id }}. {{ item.text }}</td></tr>
+    {% cycle '<strong>'|safe '' as tag_st silent %}
+    {% cycle '</strong>'|safe '' as tag_en silent %}
+        <tr><td>{{ tag_st }}{{ forloop.counter }}. {{ item.text }}{{ tag_en }}</td></tr>
+
+{% comment %} This should not be necessary, but just to ensure nothing goes wrong {% endcomment %}
+{% empty %}
+    <tr><td>Sorry, no entries found yet in this list.</td></tr>
 {%    endfor %}
     </table>
 {% endblock table %}
