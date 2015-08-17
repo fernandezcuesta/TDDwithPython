@@ -2,7 +2,7 @@
 
 {% block header_text %}Your To-Do list{% if list.id %} (id: {{ list.id }}){% endif %}{% endblock %}
 
-{% block action %}/lists/{{ list.id }}/add_item{% endblock action %}
+{% block action %}/lists/{{ list.id }}/{% endblock action %}
 
 {% block table %}
     <table id="id_list_table" class="table table-striped">

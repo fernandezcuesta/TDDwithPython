@@ -55,6 +55,15 @@ class NewListTest(TestCase):
 
 class ListViewTest(TestCase):
 
+    def test_validation_errors_are_passed_to_list_page(self):
+        list_ = List.objects.create()
+        response = self.client.post('/lists/%d/' % (list_.id, ),
+                                    data={'item_text': ''})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'list.html')
+        expected_error = escape("You can't have an empty list item")
+        self.assertContains(response, expected_error)
+
     def test_uses_list_template(self):
         list_ = List.objects.create()
         response = self.client.get('/lists/%d/' % list_.id)
@@ -81,15 +90,12 @@ class ListViewTest(TestCase):
         response = self.client.get('/lists/%d/' % correct_list.id)
         self.assertEqual(response.context['list'], correct_list)
 
-
-class NewItemtest(TestCase):
-
     def test_can_save_a_POST_request_to_an_existing_list(self):
         other_list = List.objects.create()
         correct_list = List.objects.create()
 
         self.client.post(
-            '/lists/%d/add_item' % correct_list.id,
+            '/lists/%d/' % correct_list.id,
             data={'item_text': 'A new item for an existing list'}
         )
         self.assertEqual(Item.objects.count(), 1)
@@ -97,9 +103,9 @@ class NewItemtest(TestCase):
         self.assertEqual(new_item.list, correct_list)
         self.assertEqual(new_item.text, 'A new item for an existing list')
 
-    def test_redirects_to_list_view(self):
+    def test_POST_redirects_to_list_view(self):
         correct_list = List.objects.create()
-        response = self.client.post('/lists/%d/add_item' % correct_list.id,
+        response = self.client.post('/lists/%d/' % correct_list.id,
                                     data={'item_text': 'My new list item'})
         self.assertEqual(response.status_code, 302)
         list_id = List.objects.first().id
