@@ -32,7 +32,7 @@ def view_list(request, id):
 
 
 def new_list(request):
-    list_ = List.objects.create()
+    list_ = List.objects.create(author=request.user)
     item = Item.objects.create(text=request.POST['item_text'], list=list_)
     try:
         item.full_clean()

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block header_text %}Your To-Do list{% if list.id %} (id: {{ list.id }}){% endif %}{% endblock %}
+{% block header_text %}{{ list.author }}'s To-Do list{% if list.id %} (id: {{ list.id }}){% endif %}{% endblock %}
 
 {% block action %}{% url 'view_list' list.id %}{% endblock action %}
 
