@@ -20,7 +20,8 @@ def view_list(request, id):
     if request.method == 'POST':
         form = ItemForm(data=request.POST)
         if form.is_valid():
-            Item.objects.create(text=request.POST['text'], list=list_)
+#            Item.objects.create(text=request.POST['text'], list=list_)
+            form.save(for_list=list_)
 #            return redirect('/lists/%d/' % list_.id)
             return redirect(list_)
     return render(request,
@@ -32,7 +33,7 @@ def new_list(request):
     form = ItemForm(data=request.POST)
     if form.is_valid():  # will validate and clean form fields, Item
         list_ = List.objects.create(author=request.user)
-        Item.objects.create(text=request.POST['text'], list=list_)
+        form.save(for_list=list_)
         return redirect(list_)  # uses get_absolute_url
     else:
         return render(request, 'home.html', {'form': form})
