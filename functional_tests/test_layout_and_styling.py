@@ -15,7 +15,7 @@ class LayoutAndStylingTest(FunctionalTest):
         self.browser.set_window_size(1024, 768)
 
         # Check if inputbox is moderately centered in the screen
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_inputbox()
         self.assertAlmostEqual(
             inputbox.location['x'] + inputbox.size['width'] / 2,
             512,
