@@ -1,15 +1,15 @@
-import sys
+#import sys
 
-from unittest import skip
+#from unittest import skip
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+#from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from .base import FunctionalTest
 
 
-class NewVisitorTest(FunctionalTest):
 
+class NewVisitorTest(FunctionalTest):
     def test_can_start_a_list_and_retrieve_it_later(self):
         # User goes and cheks its homepage
         self.browser.get(self.server_url)
@@ -40,6 +40,7 @@ class NewVisitorTest(FunctionalTest):
         inputbox.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items on the list
+        # Newest items go on top
         self.check_for_row_in_list_table('1. Buy peacock feathers')
         self.check_for_row_in_list_table('2. Use peacock feathers to make a fly')
 

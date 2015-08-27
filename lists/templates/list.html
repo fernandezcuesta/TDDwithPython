@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block header_text %}{{ list.author }}'s To-Do list{% if list.id %} (id: {{ list.id }}){% endif %}{% endblock %}
+{% block header_text %}{{ list.author }}'s To-Do list{% if list.id %}{% endif %}{% endblock %}
 
 {% block action %}{% url 'view_list' list.id %}{% endblock action %}
 
@@ -9,7 +9,7 @@
 {%    for item in list.item_set.all %}
     {% cycle '<strong>'|safe '' as tag_st silent %}
     {% cycle '</strong>'|safe '' as tag_en silent %}
-        <tr><td>{{ tag_st }}{{ forloop.counter }}. {{ item.text }}{{ tag_en }}</td></tr>
+        <tr><td>{{ tag_st }}{{ forloop.revcounter }}. {{ item.text }}{{ tag_en }}</td><td>{{ item.publish_date }}</td></tr>
 
 {% comment %} This should not be necessary, but just to ensure nothing goes wrong {% endcomment %}
 {% empty %}

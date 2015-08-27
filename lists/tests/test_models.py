@@ -71,4 +71,4 @@ class ListAndItemModelsTest(TestCase):
         item1 = Item.objects.create(list=list_, text='item1')
         item2 = Item.objects.create(list=list_, text='item2')
         item3 = Item.objects.create(list=list_, text='item3')
-        self.assertEqual(list(Item.objects.all()), [item1, item2, item3])
+        self.assertEqual(list(Item.objects.all())[::-1], [item1, item2, item3])
